@@ -1,9 +1,16 @@
-// Описаний в документації
+// Імпорт бібліотеки вибору дати та часу
 import flatpickr from 'flatpickr';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
+
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 //Список посилань на елементи html
 const refs = {
+  timer: document.querySelector('.timer'),
+  fieldEl: document.querySelectorAll('.field'),
+  value: document.querySelectorAll('.value'),
+  label: document.querySelectorAll('.label'),
   savedDate: document.querySelector('#datetime-picker'),
   daysSpan: document.querySelector('[data-days]'),
   hoursSpan: document.querySelector('[data-hours]'),
@@ -24,7 +31,10 @@ const options = {
     if (new Date(selectedDates[0]) > new Date()) {
       refs.startBtn.disabled = false;
     } else {
-      alert('Input date in future');
+      // alert('Input date in future');
+      Notify.failure('Please choose a date in the future', {
+        position: 'center-center',
+      });
     }
   },
 };
@@ -80,3 +90,18 @@ function addLeadingZero(value) {
   return value;
 }
 // Додаємо трохи стилів
+refs.savedDate.style.marginLeft = '40%';
+refs.savedDate.style.fontSize = '25px';
+refs.startBtn.style.fontSize = '25px';
+refs.timer.style.cssText = `display:flex;
+justify-content: center;
+gap: 30px;
+margin-top: 30px;
+font-size: 40px;`;
+for (let i = 0; i < refs.fieldEl.length; i += 1) {
+  refs.fieldEl[i].style.cssText = `display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: solid 3px;
+  padding: 0 10px;`;
+}
